@@ -86,9 +86,22 @@ function corrigeMulher(request, response) {
   response.json(mulheres);
 }
 
+function deletaMulher(request, response) {
+  function todasMenosEla(mulher) {
+    return mulher.id !== request.params.id;
+  }
+
+  const mulheresQueFicaram = mulheres.filter(todasMenosEla);
+
+  response.json(mulheresQueFicaram);
+}
+
+
 app.use(router.get('/mulheres', mostraMulheres)) // configurei rota GET /mulheres
 app.use(router.post('/mulheres', criaMulher)) //configurei rota POST /mulheres
 app.use(router.patch('/mulheres/:id', corrigeMulher)) //configurei a rota PATCH /mulheres/:id
+app.use(router.delete('/mulheres/:id', deletaMulher)); // Configure DELETE /mulheres/:id route
+
 
 
 // PORTA
